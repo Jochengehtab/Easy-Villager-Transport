@@ -2,6 +2,7 @@ package de.jochengehtab.Events;
 
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -20,8 +21,14 @@ public class Sneaking implements AttackEntityCallback {
         if (entity instanceof VillagerEntity && !world.isClient()){
             if (player.isSneaking()) {
                 player.getInventory().addPickBlock(new ItemStack(Items.VILLAGER_SPAWN_EGG));
+                entity.remove(Entity.RemovalReason.KILLED);
             }
-            entity.remove(Entity.RemovalReason.KILLED);
+        }
+        else if (entity instanceof ZombieEntity && !world.isClient()){
+            if (player.isSneaking()) {
+                player.getInventory().addPickBlock(new ItemStack(Items.ZOMBIE_SPAWN_EGG));
+                entity.remove(Entity.RemovalReason.KILLED);
+            }
         }
         return ActionResult.PASS;
     }
