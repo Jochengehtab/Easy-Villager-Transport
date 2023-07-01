@@ -1,6 +1,8 @@
 package de.jochengehtab;
 
-import de.jochengehtab.Events.Replant;
+import de.jochengehtab.Controls.AddNewControl;
+import de.jochengehtab.Events.PlayerBlockBreakEvents.After;
+import de.jochengehtab.Events.PlayerBlockBreakEvents.Before;
 import de.jochengehtab.Events.Sneaking;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -13,7 +15,9 @@ public class Main implements ModInitializer {
 	public static final String MOD_ID = "easy-villager-transport";
 	@Override
 	public void onInitialize() {
+		AddNewControl.init();
 		AttackEntityCallback.EVENT.register(new Sneaking());
-		PlayerBlockBreakEvents.AFTER.register(new Replant());
+		PlayerBlockBreakEvents.AFTER.register(new After());
+		PlayerBlockBreakEvents.BEFORE.register(new Before());
 	}
 }

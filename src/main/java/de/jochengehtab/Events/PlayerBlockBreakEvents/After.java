@@ -1,4 +1,4 @@
-package de.jochengehtab.Events;
+package de.jochengehtab.Events.PlayerBlockBreakEvents;
 
 import de.jochengehtab.Main;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -10,15 +10,16 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
-public class Replant implements PlayerBlockBreakEvents.After {
+public class After implements PlayerBlockBreakEvents.After {
     @Override
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         if (state.getBlock() == Blocks.CARROTS){
             Main.LOGGER.info(state.getBlock().getName().toString());
             CarrotsBlock carrotsBlock = (CarrotsBlock) state.getBlock();
+            BlockState carrots = Blocks.CARROTS.getDefaultState();
 
             if (state.get(carrotsBlock.getAgeProperty()) == 7){
-                world.setBlockState(pos, Blocks.CARROTS.getDefaultState());
+                world.setBlockState(pos, carrots);
             }
         }
 
@@ -27,8 +28,7 @@ public class Replant implements PlayerBlockBreakEvents.After {
             PotatoesBlock carrotsBlock = (PotatoesBlock) state.getBlock();
 
             if (state.get(carrotsBlock.getAgeProperty()) == 7){
-                BlockState potatoes = Blocks.POTATOES.getDefaultState();
-                world.setBlockState(pos, potatoes);
+                world.setBlockState(pos, Blocks.POTATOES.getDefaultState());
             }
         }
 
@@ -42,7 +42,6 @@ public class Replant implements PlayerBlockBreakEvents.After {
         }
 
         if (state.getBlock() == Blocks.WHEAT){
-            Main.LOGGER.info(state.getBlock().getName().toString());
             CropBlock cropBlock = (CropBlock) state.getBlock();
             if (state.get(cropBlock.getAgeProperty()) == 7){
                 world.setBlockState(pos, Blocks.WHEAT.getDefaultState());
